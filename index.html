@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interactive Quiz</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <div id="question-box" class="question-box">
+            <h2 id="question"></h2>
+            <button id="true-btn" class="true-btn">True</button>
+            <button id="false-btn" class="false-btn">False</button>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
+/* style.css */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+}
+
+.container {
+    text-align: center;
+}
+
+.question-box {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+h2 {
+    margin-bottom: 20px;
+}
+
+button {
+    padding: 10px 20px;
+    margin: 10px;
+    font-size: 16px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.true-btn {
+    background-color: red;
+    color: white;
+}
+
+.false-btn {
+    background-color: green;
+    color: white;
+}
+
+button:hover {
+    opacity: 0.8;
+}
+// script.js
+
+// Array of 667 example questions (replace these with your actual 667 questions)
+const questions = [
+    "Is GitHub a platform for version control?",
+    "Does GitHub use Git as a version control system?",
+    "Can you collaborate with others on GitHub?",
+    // Add all your 667 questions here.
+];
+
+// Current question index
+let currentQuestionIndex = 0;
+
+function showNextQuestion() {
+    if (currentQuestionIndex < questions.length) {
+        const question = questions[currentQuestionIndex];
+        document.getElementById('question').textContent = question;
+        currentQuestionIndex++;
+    } else {
+        document.getElementById('question').textContent = "You've completed all the questions!";
+        document.getElementById('true-btn').disabled = true;
+        document.getElementById('false-btn').disabled = true;
+    }
+}
+
+function handleAnswer(isTrue) {
+    const correctAnswers = [
+        true, // Example: first question answer is true
+        true, // Example: second question answer is true
+        false, // Example: third question answer is false
+        // Add correct answers here
+    ];
+
+    const isAnswerCorrect = correctAnswers[currentQuestionIndex - 1] === isTrue;
+    
+    if (isAnswerCorrect) {
+        alert('Correct!');
+    } else {
+        alert('Incorrect!');
+    }
+
+    // Show next question after a delay
+    setTimeout(showNextQuestion, 1000);
+}
+
+// Handle Enter key press
+document.addEventListener('keydown', (event) => {
+    if (event.key === 'Enter') {
+        showNextQuestion();
+    }
+});
+
+// Handle button clicks
+document.getElementById('true-btn').addEventListener('click', () => handleAnswer(true));
+document.getElementById('false-btn').addEventListener('click', () => handleAnswer(false));
+
+// Initial setup
+showNextQuestion();
